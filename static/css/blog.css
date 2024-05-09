@@ -3,3 +3,16 @@
   font-weight: 900;
   font-style: italic;
 }
+.page-header{
+  width:100%;
+  margin:0 auto;
+}
+.post h2 a,
+.post h2 a:visited {
+    color: #000000;
+}
+
+.post > .date,
+.post > .actions {
+    float: right;
+}
