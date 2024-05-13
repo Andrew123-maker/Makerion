@@ -6,6 +6,9 @@
 .page-header{
   width:100%;
   margin:0 auto;
+  background-color:skyblue;
+  position: fixed;
+  z-index:2;
 }
 .post h2 a,
 .post h2 a:visited {
@@ -15,4 +18,53 @@
 .post > .date,
 .post > .actions {
     float: right;
+}
+
+navbar{
+  width: 100%;
+}
+.nav{
+  margin:0;
+  padding:10px;
+  list-style:none;
+  display:flex;
+  flex-direction:row;
+}
+.nav > li{
+  display:inline-block;
+  margin-left:50px;
+  padding-top:23px;
+  position:relative;
+}
+header li a{
+  color:#121212;
+  text-decoration:none;
+  text-transform:uppercase;
+}
+header li a:hover{
+  color:#212121;
+}
+header li a::before{
+  content:'';
+  display:block;
+  height:5px;
+  background:#444;
+
+  position:absolute;
+  top:0;
+  width:0%;
+  transition: all ease-in-out 250ms;
+}
+header li a:hover::before{
+  width:100%;
+}
+body{
+  height: 125vh;
+}
+header form{
+  margin-left:20px
+}
+.post > img{
+  height:300px;
+  width:400px;
 }
