@@ -37,15 +37,15 @@ navbar{
   padding-top:23px;
   position:relative;
 }
-header li a{
+.navbar > li a{
   color:#121212;
   text-decoration:none;
   text-transform:uppercase;
 }
-header li a:hover{
+.navbar > li a:hover{
   color:#212121;
 }
-header li a::before{
+.navbar > li a::before{
   content:'';
   display:block;
   height:5px;
@@ -56,12 +56,9 @@ header li a::before{
   width:0%;
   transition: all ease-in-out 250ms;
 }
-header li a:hover::before{
+.navbar > li a:hover::before{
   width:100%;
 }
 body{
   height: 125vh;
-}
-header form{
-  margin-left:20px
 }
