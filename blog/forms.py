@@ -1,4 +1,5 @@
 from django import forms
+from PIL import Image
 from .models import Post, Tag
 
 class PostForm(forms.ModelForm):
