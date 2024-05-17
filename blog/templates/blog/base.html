@@ -20,12 +20,10 @@
             </div>
             <ul class="nav navbar-nav">
               <li><a href="{% url "post_list" %}">Blog</a></li>
-              {% if user.is_authenticated %}
               <li><a href="{% url 'post_new' %}" class="top-menu">
                           {% include './icons/file-earmark-plus.svg' %}
                       Post</a></li>
               <li><a href="{% url 'post_draft_list' %}"> Draft</a></li>
-              {% endif %}
               <li><a href="#">Game</a></li>
               <li><a href="#">Sport</a></li>
 

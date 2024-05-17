@@ -20,6 +20,13 @@
   {% if post.image %}
   <img src='{{post.image.url}}' height="350" width="450">
   {% endif %}
+  <br>
+  {% if post.tag %}
+  {% for tag in post.tag.all %}
+  <a href="#">#{{ tag.title }}</a>
+  {% endfor %}
+  {% endif %}
+  <br>
   <p>{{ post.text|linebreaksbr }}</p>
 </article>
 {% endblock %}

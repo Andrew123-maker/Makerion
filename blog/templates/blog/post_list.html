@@ -7,6 +7,11 @@
             {{ post.published_date }}
         </time>
         <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+        {% if post.tag %}
+        {% for tag in post.tag.all %}
+        <a href="#">#{{ tag.title }}</a>
+        {% endfor %}
+        {% endif %}
         <br>
         <br>
      </article>
