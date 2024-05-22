@@ -2,17 +2,64 @@
   font-family: "Fira Sans", sans-serif;
   font-weight: 900;
   font-style: italic;
+  margin-left:-70px;
+  padding:0;
 }
 .page-header{
   width:100%;
   margin:0 auto;
+  position: fixed;
 }
-.post h2 a,
-.post h2 a:visited {
-    color: #000000;
+.post h3 a,
+.post h3 a:visited {
+    color: #1c1717;
+}
+.post h3, .post p{
+  display: inline-block;
 }
 
-.post > .date,
-.post > .actions {
-    float: right;
+
+navbar{
+  width: 100%;
+}
+.nav{
+  margin:0;
+  padding:10px;
+  list-style:none;
+  display:flex;
+  flex-direction:row;
+}
+.nav > li{
+  display:inline-block;
+  margin-left:50px;
+  padding-top:23px;
+  position:relative;
+}
+.navbar > li a{
+  color:#121212;
+  text-decoration:none;
+  text-transform:uppercase;
+}
+.navbar > li a:hover{
+  color:#212121;
+}
+.navbar > li a::before{
+  content:'';
+  display:block;
+  height:5px;
+  background:#444;
+
+  position:absolute;
+  top:0;
+  width:0%;
+  transition: all ease-in-out 250ms;
+}
+.navbar > li a:hover::before{
+  width:100%;
+}
+body{
+  height: 125vh;
+}
+.comment {
+    margin: 20px 0px 20px 20px;
 }

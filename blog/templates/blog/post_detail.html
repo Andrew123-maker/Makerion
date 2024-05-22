@@ -11,12 +11,13 @@
         <span class="glyphicon glyphicon-remove"></span></a>
     {% endif %}
   </aside>
+  <h2>{{ post.title }}</h2>
   {% if post.published_date %}
-  <time>{{post.published_date}}</time>
+  <p>By: {{post.user}} | {{post.published_date}}</p>
   {% else %}
     <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}", style="float:right; margin:1px">Publish</a>
   {% endif %}
-  <h2>{{ post.title }}</h2>
+  <hr>
   {% if post.image %}
   <img src='{{post.image.url}}' height="350" width="450">
   {% endif %}
@@ -29,4 +30,24 @@
   <br>
   <p>{{ post.text|linebreaksbr }}</p>
 </article>
+
+<br>
+<hr>
+<a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+
+<br>
+<br>
+
+{% for comment in post.comments.all %}
+<div class="comment">
+  <strong>{{comment.user}} -
+          {{comment.created_date}}
+  </strong>
+  <br>
+  <p>{{comment.text|linebreaksbr}}</p>
+  <br>
+</div>
+{% empty %}
+    <p>No comments here yet :(</p>
+{% endfor %}
 {% endblock %}

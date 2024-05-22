@@ -19,19 +19,19 @@ class Tag(models.Model):
   class Meta:
     verbose_name = 'Tag'
     verbose_name_plural = 'Tags'
-    
+
   def get_absolute_url(self):
     return reverse('tags', args=[self.slug])
-    
+
   def __str__(self):
     return self.title
-    
+
   def save(self, *arg, **kwargs):
     if not self.slug:
       self.slug - slugify(self.slug)
     return super().save(*arg, **kwargs)
-      
-  
+
+
 class Post(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   image = ImageField(blank=True, null=True)
@@ -49,24 +49,16 @@ class Post(models.Model):
   def __str__(self):
     return self.title
 
+class Comment(models.Model):
+  post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments')
+  user = models.CharField(max_length=200)
+  text = models.TextField()
+  created_date = models.DateTimeField(default=timezone.now)
+  likes = models.IntegerField(default=0)
+
+  def __str__(self):
+    return self.text
+
 class Follow(models.Model):
   follower = models.ForeignKey(User, on_delete=models.CASCADE,related_name='follower')
   following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
-
-class Stream(models.Model):
-  following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='stream_following')
-  user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
-  post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post', null=True)
-  published_date = models.DateTimeField(blank=True, null=True)
-  
-  def add_post(sender, instance, *args, **kwargs):
-    post = instance
-    user = post.user
-    followers = Follow.objects.all().filter(following=user)
-    for follower in followers:
-      stream = Stream(post=post,user=follower.follower, published_date=post.published_date, following=user)
-      stream.save()
-
-
-#
-post_save.connect(Stream.add_post, sender=Post)
