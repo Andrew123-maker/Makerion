@@ -4,23 +4,22 @@ from .models import Post, Tag
 from .forms import PostForm, CommentForm
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 def post_list(request):
-  posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-  return render(request, 'blog/post_list.html', {'posts':posts})
+  if 'q' in request.GET:
+    q = request.GET['q']
+    multiple_q = Q(tag__title__icontains=q) | Q(title__icontains=q)
+    posts = Post.objects.filter(multiple_q).order_by('published_date').distinct()
+  else:
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date').distinct()
+  context = {'posts':posts}
+  return render(request, 'blog/post_list.html', context)
 
 def post_detail(request, pk):
   post = get_object_or_404(Post, pk=pk)
   return render(request, 'blog/post_detail.html', {'post':post})
-
-def tag(request, tag_slug):
-  tag = get_object_or_404(Tag, slug=tag_slug)
-  posts = Post.objects.filter(tag=tag).order_by('-published_date')
-  context={
-    'tag': tag
-  }
-  return render(request, tag.html, context)
 
 @login_required
 def post_new(request):
