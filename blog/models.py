@@ -1,3 +1,4 @@
+from re import U
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
@@ -6,6 +7,7 @@ from django.utils import timezone
 from django.utils.text import slugify 
 from django.urls import reverse
 import uuid
+from PIL import Image
 from django.db.models.signals import post_save, post_delete
 
 # uploading user files to a specific directory
@@ -34,7 +36,7 @@ class Tag(models.Model):
 
 class Post(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
-  image = ImageField(blank=True, null=True)
+  image = ImageField(blank=True, null=True, upload_to='images/')
   title = models.CharField(max_length=200)
   text = models.TextField()
   tag = models.ManyToManyField(Tag, related_name='tags')
@@ -62,3 +64,21 @@ class Comment(models.Model):
 class Follow(models.Model):
   follower = models.ForeignKey(User, on_delete=models.CASCADE,related_name='follower')
   following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
+
+class Profile(models.Model):
+  user = models.OneToOneField(User, on_delete=models.CASCADE)
+  name = models.CharField(max_length=100, default='name')
+  bio = models.TextField(blank=True, null=True)
+  image = models.ImageField(default='default.jpg')
+  last_update = models.DateTimeField(User, auto_now=True)
+  
+  def __str__(self):
+    return self.user.username
+
+#create profile when new user sign up
+def created_profile(sender, instance, created, **kwargs):
+  if created:
+    user_profile = Profile(user=instance)
+    user_profile.save()
+
+post_save.connect(created_profile, sender=User)

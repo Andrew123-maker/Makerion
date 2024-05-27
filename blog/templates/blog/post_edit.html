@@ -2,7 +2,7 @@
 {% block title %}Create Post/Edit Post{% endblock title %}
 {% block content %}
 <h2>New Post</h2>
-<form method="Post" class="post_form">
+<form enctype="multipart/form-data" method="Post" class="post_form">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit" class="save btn btn-secondary">Save</button>

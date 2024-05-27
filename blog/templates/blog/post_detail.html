@@ -12,11 +12,7 @@
     {% endif %}
   </aside>
   <h2>{{ post.title }}</h2>
-  {% if post.published_date %}
   <p>By: {{post.user}} | {{post.published_date}}</p>
-  {% else %}
-    <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}", style="float:right; margin:1px">Publish</a>
-  {% endif %}
   <hr>
   {% if post.image %}
   <img src='{{post.image.url}}' height="350" width="450">

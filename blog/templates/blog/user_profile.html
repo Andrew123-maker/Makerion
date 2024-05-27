@@ -1,0 +1,16 @@
+{% extends 'blog/index.html' %}
+{% load static %}
+{% block content %}
+{% if profile %}
+
+<div class="card mb-3">
+  <img src="{{profile.image.url}}" class="card-img-top" alt="Profile Image">
+  <div class="card-body">
+    <h5 class="card-title">{{profile.name}} | @{{profile.user.username}}</h5>
+    {% if profile.bio %}
+    <p class="card-text">{{ profile.bio|linebreaksbr }}</p>
+    {% endif %}
+    <p class="card-text"><small class="text-muted">Last updated:{{profile.last_update}}</small></p>
+  </div>
+{% endif %}
+{% endblock %}
