@@ -12,7 +12,7 @@ from django.db.models.signals import post_save, post_delete
 
 # uploading user files to a specific directory
 def user_directory_path(instance, filename):
-    return 'user_{0}/{1}'.format(instance.user.id, filename)
+    return 'user_{0}/{1}'.format(instance.user, filename)
 
 
 class Tag(models.Model):
@@ -36,7 +36,7 @@ class Tag(models.Model):
 
 class Post(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
-  image = ImageField(blank=True, null=True, upload_to='images/')
+  image = ImageField(blank=True, null=True, upload_to=user_directory_path)
   title = models.CharField(max_length=200)
   text = models.TextField()
   tag = models.ManyToManyField(Tag, related_name='tags')
@@ -69,7 +69,7 @@ class Profile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE)
   name = models.CharField(max_length=100, default='name')
   bio = models.TextField(blank=True, null=True)
-  image = models.ImageField(default='default.jpg')
+  image = models.ImageField(default='default.jpg',upload_to=user_directory_path)
   last_update = models.DateTimeField(User, auto_now=True)
   
   def __str__(self):

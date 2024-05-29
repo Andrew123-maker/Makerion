@@ -1,8 +1,7 @@
 from django.shortcuts import render, get_object_or_404
-from django.core.files.uploadedfile import SimpleUploadedFile
-from PIL import Image
+from django.contrib.auth.models import User
 from django.utils import timezone
-from .models import Post, Tag, Profile
+from .models import Post, Profile
 from .forms import PostForm, CommentForm
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
@@ -82,6 +81,11 @@ def add_comment_to_post(request, pk):
     form = CommentForm()
   return render(request, 'blog/add_comment_to_post.html', {'form':form})
 
-def user_profile(request):
-  profile = get_object_or_404(Profile, user=request.user)
-  return render(request, 'blog/user_profile.html', {'profile':profile})
+def user_profile(request, username):
+  user = get_object_or_404(User, username=username)
+  profile = Profile.objects.get(user=user)
+  context = {
+    'profile':profile,
+  }
+  return render(request, 'blog/user_profile.html', context)
+

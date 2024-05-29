@@ -4,7 +4,7 @@
 <ul>
 {% for post in posts reversed %}
     <article class="post">
-            <li><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>- {{post.user}} | {{ post.published_date }}</li>
+            <li><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a> | <a href="{% url 'user_profile' username=post.user %}"> {{post.user}} </a> | {{ post.published_date }}</li>
         {% if post.tag %}
         {% for tag in post.tag.all %}
         <a href="#">#{{ tag.title }}</a>
